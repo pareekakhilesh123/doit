@@ -1,10 +1,12 @@
 
 import './App.css';
 
+import Dashboard from './Page/Dashboard';
+
 function App() {
   return (
     <div className="App">
-      <h2>jai shree ram</h2>
+<Dashboard />
     </div>
   );
 }

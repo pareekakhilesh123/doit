@@ -37,6 +37,11 @@ const InputTaskAdd = ({ task, setTask, handleAddTask }) => {
         value={task}
         onChange={handleInputBoxAddTask}
         fullWidth
+        autoComplete="off"
+        onKeyDown={(e) => {
+        if (e.key === "Enter")
+          handleClick();
+        }}
       />
 
       <Box

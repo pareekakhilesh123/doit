@@ -1,17 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addTask } from "../taskSlice";
 import { Box, Button, IconButton, TextField } from "@mui/material";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import LoopIcon from "@mui/icons-material/Loop";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 
-const InputTaskAdd = ({ task, setTask, handleAddTask }) => {
-  const handleInputBoxAddTask = (e) => {
-    setTask(e.target.value);
-  };
+const InputTaskAdd = () => {
+  const [task, setTask] = useState("");
+  const dispatch = useDispatch();
 
   const handleClick = () => {
     if (task.trim()) {
-      handleAddTask();
+      dispatch(addTask(task));  // ✅ अब Task Backend API में भी Save होगा
+      setTask("");
     } else {
       alert("Task cannot be empty");
     }
@@ -35,15 +37,13 @@ const InputTaskAdd = ({ task, setTask, handleAddTask }) => {
         placeholder="Enter your task"
         variant="outlined"
         value={task}
-        onChange={handleInputBoxAddTask}
+        onChange={(e) => setTask(e.target.value)}
         fullWidth
         autoComplete="off"
         onKeyDown={(e) => {
-        if (e.key === "Enter")
-          handleClick();
+          if (e.key === "Enter") handleClick();
         }}
       />
-
       <Box
         sx={{
           display: "flex",
@@ -63,7 +63,6 @@ const InputTaskAdd = ({ task, setTask, handleAddTask }) => {
             <CalendarTodayIcon />
           </IconButton>
         </Box>
-
         <Button
           variant="contained"
           sx={{

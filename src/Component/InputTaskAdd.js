@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addTask } from "../taskSlice";
+import { addTaskAPI } from "../taskSlice";
 import { Box, Button, IconButton, TextField } from "@mui/material";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import LoopIcon from "@mui/icons-material/Loop";
@@ -12,7 +12,7 @@ const InputTaskAdd = () => {
 
   const handleClick = () => {
     if (task.trim()) {
-      dispatch(addTask(task));  // ✅ अब Task Backend API में भी Save होगा
+      dispatch(addTaskAPI(task)); 
       setTask("");
     } else {
       alert("Task cannot be empty");

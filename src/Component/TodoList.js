@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { toggleComplete, togglePriority } from "../taskSlice";
+import { fetchTasks, toggleComplete, togglePriority } from "../taskSlice";
 import {
   List,
   ListItem,
@@ -9,6 +9,7 @@ import {
   ListItemText,
   Divider,
   Typography,
+  CircularProgress,
 } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
@@ -16,16 +17,23 @@ import InputTaskAdd from "./InputTaskAdd";
 import TodoDetails from "../Component/TaskDetails";  
 
 const TodoList = () => {
-  const tasks = useSelector((state) => state.tasks.tasks);
   const dispatch = useDispatch();
-  const [selectedTaskId, setSelectedTaskId] = useState(null); 
+  const { tasks, status, error } = useSelector((state) => state.tasks);
+  const [selectedTaskId, setSelectedTaskId] = useState(null);
+
+ 
+  useEffect(() => {
+    dispatch(fetchTasks());
+  }, [dispatch]);
+
+  if (status === "loading") return <CircularProgress />;
+  if (status === "failed") return <Typography color="error">{error}</Typography>;
 
   const incompleteTasks = tasks.filter((task) => !task.completed);
   const completedTasks = tasks.filter((task) => task.completed);
 
   return (
     <div style={{ display: "flex", padding: "20px" }}>
-     
       <div style={{ flex: 1 }}>
         <InputTaskAdd />
         <Typography variant="h6">To Do</Typography>
@@ -69,7 +77,6 @@ const TodoList = () => {
         </List>
       </div>
 
-   
       <div style={{ flex: 1, paddingLeft: "20px" }}>
         {selectedTaskId && <TodoDetails taskId={selectedTaskId} />}
       </div>

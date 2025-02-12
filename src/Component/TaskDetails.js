@@ -1,6 +1,6 @@
-import React from "react"; 
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { selectTask, deleteTask, toggleComplete, togglePriority } from "../taskSlice"; 
+import { selectTask, toggleComplete, togglePriority } from "../taskSlice";
 import {
   Box,
   Typography,
@@ -13,20 +13,11 @@ import {
   Divider,
   TextField,
 } from "@mui/material";
-import {
-  Add,
-  Notifications,
-  CalendarToday,
-  Repeat,
-  Star,
-  StarBorder,
-  Delete,
-  Close,
-} from "@mui/icons-material";
+import { Add, Notifications, CalendarToday, Repeat, Star, StarBorder, Delete, Close } from "@mui/icons-material";
 
 const TodoDetails = ({ taskId }) => {
-  const task = useSelector((state) => state.tasks.tasks.find((t) => t.id === taskId));
   const dispatch = useDispatch();
+  const task = useSelector((state) => state.tasks.tasks.find((t) => t.id === taskId));
 
   if (!task) return null;
 
@@ -115,7 +106,7 @@ const TodoDetails = ({ taskId }) => {
 
         <Typography variant="body2">Created Today</Typography>
 
-        <IconButton onClick={() => dispatch(deleteTask(task.id))}>
+        <IconButton>
           <Delete />
         </IconButton>
       </Box>

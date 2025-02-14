@@ -1,32 +1,47 @@
-
-import './App.css';
-import React  from 'react';
-import Dashboard from './Page/Dashboard';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Box } from '@mui/material';
+import Appbar from './Component/Appbar';
+import Sidebar from './Component/Sidebar';
+import Today from './Page/Today';
 import Important from './Page/Important';
 import All_tasks from './Page/All_tasks';
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
- 
 
 function App() {
-   
-  return (
+    const [isSidebarOpen, setIsSidebarOpen] = useState(true); 
 
-<Router>
- 
-     
+    const handleToggleSidebar = () => {
+        setIsSidebarOpen(!isSidebarOpen);
+    };
 
- 
-  <div style={{ flex: 1, padding: "20px" }}>
-  
-    <Routes>
-      <Route path="/" element={<Dashboard />} /> 
-      <Route path="/star" element={<Important />} /> 
-      <Route path="/task" element={<All_tasks />} /> 
-    </Routes>
-  </div>
+    return (
+        <Router>
+            <Appbar onToggleSidebar={handleToggleSidebar} />
+            
+            <Box sx={{ display: 'flex', width: "70%" }}>
+                {/* Sidebar */}
+                <Box sx={{
+                    width: isSidebarOpen ? "240px" : "0px"
+                  
+                }}>
+                    {isSidebarOpen && <Sidebar />}
+                </Box>
 
-</Router>
-  );
+                {/* Main Content */}
+                <Box sx={{
+                    flexGrow: 1,
+                    padding: 2,
+                    transition: "margin 0.3s ease-in-out"
+                }}>
+                    <Routes>
+                        <Route path="/today" element={<Today />} />
+                        <Route path="/star" element={<Important />} />
+                        <Route path="/task" element={<All_tasks />} />
+                    </Routes>
+                </Box>
+            </Box>
+        </Router>
+    );
 }
 
 export default App;

@@ -1,30 +1,19 @@
 import React from 'react';
+import  { useNavigate, useLocation } from 'react-router-dom';
 import {
-  Box,
-  Drawer,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  Avatar,
-  Typography,
-  Divider,
-  Paper,
+  Box, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText,
+  Avatar, Typography, Divider, Paper
 } from '@mui/material';
 import {
-  CalendarToday as CalendarTodayIcon,
-  Assignment as AssignmentIcon,
-  Star as StarIcon,
-  FormatListBulleted as FormatListBulletedIcon,
-  Person as PersonIcon,
-  Add as AddIcon,
+  CalendarToday as CalendarTodayIcon, Assignment as AssignmentIcon, Star as StarIcon,
+  FormatListBulleted as FormatListBulletedIcon, Person as PersonIcon, Add as AddIcon
 } from '@mui/icons-material';
 import { styled } from '@mui/material/styles';
- 
 import './Sidebar.css';
 
 const Sidebar = () => {
+  const navigate = useNavigate(); 
+  const location = useLocation();
   const drawerWidth = 240;
 
   const DemoPaper = styled(Paper)(({ theme }) => ({
@@ -37,24 +26,33 @@ const Sidebar = () => {
 
   return (
     <>
-    
-      
-      <Box
-        sx={{
-          
-          alignItems: 'center',
-           
-        }}
-      >
+      <Box sx={{ alignItems: 'center', position: 'relative' }}>
         <Avatar
           src="./profile.png"
           alt="Profile"
-          sx={{ width: 80, height: 80, left:123  }}
+          sx={{
+            width: 80,
+            height: 80,
+            position: 'absolute',    
+            left: 100,
+            top: 0,  
+            zIndex: 10,  
+          }}
         />
-        <Typography variant="subtitle1"  sx={{textAlign:"center" , position: "absolute" ,left:123}}>Hey, ABCD</Typography>
-
+        <Typography
+          variant="subtitle1"
+          sx={{
+            textAlign: "center",
+            position: "absolute",
+            left: 100,
+            top: 100,  
+            zIndex: 2,    
+          }}
+        >
+          Hey, ABCD
+        </Typography>
       </Box>
-      
+
       <Drawer
         variant="permanent"
         sx={{
@@ -67,59 +65,70 @@ const Sidebar = () => {
             border: 'none',
             mt: 14,
             ml: 4,
-            zIndex: -1
-             
-           
+            zIndex: 1,  
           },
         }}
       >
-
-        <Divider  sx={{  marginTop:"100px" , position:"sticky"}}/>
-
-        
+        <Divider sx={{ marginTop: "100px", position: "sticky" }} />
 
         <List>
-          <DemoPaper variant="elevation" sx={{ height: 250  }}>
+          <DemoPaper variant="elevation" sx={{ height: 250 }}>
             <ListItem disablePadding>
-              <ListItemButton>
+              <ListItemButton onClick={() => navigate('/task')} 
+                sx={{
+                  bgcolor: location.pathname === '/task' ? 'rgba(0, 128, 0, 0.2)' : 'transparent'
+                }}
+> 
                 <ListItemIcon>
-                  <AssignmentIcon />
+                  <AssignmentIcon sx={{ color: location.pathname === '/task' ? 'green' : 'inherit' }} />
                 </ListItemIcon>
                 <ListItemText primary="All Tasks" />
               </ListItemButton>
             </ListItem>
 
             <ListItem disablePadding>
-              <ListItemButton sx={{ bgcolor: 'rgba(0, 128, 0, 0.1)' }}>
+              <ListItemButton onClick={() => navigate('/today')} 
+                sx={{
+                  bgcolor: location.pathname === '/today' ? 'rgba(0, 128, 0, 0.2)' : 'transparent'
+                }}>
                 <ListItemIcon>
-                  <CalendarTodayIcon sx={{ color: 'green' }} />
+                  <CalendarTodayIcon sx={{ color: location.pathname === '/today' ? 'green' : 'inherit' }} />
                 </ListItemIcon>
                 <ListItemText primary="Today" />
               </ListItemButton>
             </ListItem>
 
             <ListItem disablePadding>
-              <ListItemButton>
+              <ListItemButton  onClick={() => navigate('/star')} 
+                sx={{
+                  bgcolor: location.pathname === '/star' ? 'rgba(0, 128, 0, 0.2)' : 'transparent'
+                }}>
                 <ListItemIcon>
-                  <StarIcon />
+                  <StarIcon   sx={{ color: location.pathname === '/star' ? 'green' : 'inherit' }}/>
                 </ListItemIcon>
                 <ListItemText primary="Important" />
               </ListItemButton>
             </ListItem>
 
             <ListItem disablePadding>
-              <ListItemButton>
+              <ListItemButton onClick={() => navigate('/planned')} 
+                sx={{
+                  bgcolor: location.pathname === '/planned' ? 'rgba(0, 128, 0, 0.2)' : 'transparent'
+                }}>
                 <ListItemIcon>
-                  <FormatListBulletedIcon />
+                  <FormatListBulletedIcon  sx={{ color: location.pathname === '/planned' ? 'green' : 'inherit' }} />
                 </ListItemIcon>
                 <ListItemText primary="Planned" />
               </ListItemButton>
             </ListItem>
 
             <ListItem disablePadding>
-              <ListItemButton>
+              <ListItemButton onClick={() => navigate('/assigned')} 
+                sx={{
+                  bgcolor: location.pathname === '/assigned' ? 'rgba(0, 128, 0, 0.2)' : 'transparent'
+                }}>
                 <ListItemIcon>
-                  <PersonIcon />
+                  <PersonIcon  sx={{ color: location.pathname === '/assigned' ? 'green' : 'inherit' }} />
                 </ListItemIcon>
                 <ListItemText primary="Assigned to me" />
               </ListItemButton>
@@ -139,9 +148,7 @@ const Sidebar = () => {
               </ListItemButton>
             </ListItem>
           </DemoPaper>
-        </List>
-
-        <Box sx={{ textAlign: 'center', mt: 'auto', p: 2 }}>
+          <Box sx={{ textAlign: 'center', mt: 'auto', p: 2 }}>
           <Typography variant="subtitle2" color="textSecondary">
             Today Tasks
           </Typography>
@@ -149,7 +156,12 @@ const Sidebar = () => {
             11
           </Typography>
         </Box>
+        </List>
+
+       
       </Drawer>
+      
+      
     </>
   );
 };

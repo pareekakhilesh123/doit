@@ -9,7 +9,7 @@ import {
   ListItemText,
   Divider,
   Typography,
-  CircularProgress,
+  
 } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
@@ -18,16 +18,13 @@ import TodoDetails from "../Component/TaskDetails";
 
 const TodoList = () => {
   const dispatch = useDispatch();
-  const { tasks, status, error } = useSelector((state) => state.tasks);
+  const { tasks } = useSelector((state) => state.tasks);
   const [selectedTaskId, setSelectedTaskId] = useState(null);
 
  
-  useEffect(() => {
-    dispatch(fetchTasks());
-  }, [dispatch]);
 
-  if (status === "loading") return <CircularProgress />;
-  if (status === "failed") return <Typography color="error">{error}</Typography>;
+
+  
 
   const incompleteTasks = tasks.filter((task) => !task.completed);
   const completedTasks = tasks.filter((task) => task.completed);

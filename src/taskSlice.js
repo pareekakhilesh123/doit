@@ -1,8 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 
-export const fetchTasks = createAsyncThunk("tasks/fetchTasks", async () => {
-  const response = await fetch("http://localhost:5000/tasks");
+export const fetchTasks = createAsyncThunk("tasks/fetchTasks", async (queryParam) => {
+  const response = await fetch("http://localhost:5000/tasks?filter="+queryParam);
   return response.json();
 });
 

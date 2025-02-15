@@ -6,6 +6,7 @@ import Sidebar from './Component/Sidebar';
 import Today from './Page/Today';
 import Important from './Page/Important';
 import All_tasks from './Page/All_tasks';
+import Planed from './Page/Planed';
 
 function App() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(true); 
@@ -18,7 +19,7 @@ function App() {
         <Router>
             <Appbar onToggleSidebar={handleToggleSidebar} />
             
-            <Box sx={{ display: 'flex', width: "70%" }}>
+            <Box sx={{ display: 'flex',   }}>
                 {/* Sidebar */}
                 <Box sx={{
                     width: isSidebarOpen ? "240px" : "0px"
@@ -37,6 +38,7 @@ function App() {
                         <Route path="/today" element={<Today />} />
                         <Route path="/star" element={<Important />} />
                         <Route path="/task" element={<All_tasks />} />
+                        <Route path="/planned" element={<Planed />} />
                     </Routes>
                 </Box>
             </Box>

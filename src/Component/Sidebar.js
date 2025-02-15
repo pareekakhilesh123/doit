@@ -26,6 +26,7 @@ const Sidebar = () => {
 
   return (
     <>
+    
       <Box sx={{ alignItems: 'center', position: 'relative' }}>
         <Avatar
           src="./profile.png"

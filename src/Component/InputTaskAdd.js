@@ -29,7 +29,7 @@ const InputTaskAdd = () => {
         display: "flex",
         flexDirection: "column",
         gap: 2,
-        width: "100%",
+        
       }}
     >
       <TextField

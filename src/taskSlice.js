@@ -20,6 +20,20 @@ export const addTaskAPI = createAsyncThunk("tasks/addTask", async (taskText) => 
   return response.json(); 
 });
 
+export const updateTaskAPI = createAsyncThunk(
+  "tasks/updateTask",
+  async ({ id, completed, prioritized }) => {
+    const response = await fetch(`http://localhost:5000/tasks/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ completed, prioritized }),
+    });
+
+    return response.json();
+  }
+);
 
 const initialState = {
   tasks: [],
@@ -46,17 +60,24 @@ const taskSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+  
       .addCase(fetchTasks.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.tasks = action.payload;
       })
-      .addCase(fetchTasks.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.error.message;
-      })
+     
       .addCase(addTaskAPI.fulfilled, (state, action) => {
         state.tasks.push(action.payload);
+      })
+     
+      .addCase(updateTaskAPI.fulfilled, (state, action) => {
+        const updatedTask = action.payload;
+        const index = state.tasks.findIndex((task) => task.id === updatedTask.id);
+        if (index !== -1) {
+          state.tasks[index] = updatedTask;
+        }
       });
+      
   },
 });
 
